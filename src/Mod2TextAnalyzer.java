@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.io.InputStreamReader;
 
-
 public class Mod2TextAnalyzer {
 
 	public class UniqueWord implements Comparable<UniqueWord>
@@ -32,6 +31,8 @@ public class Mod2TextAnalyzer {
 	}
 	
 	static Mod2TextAnalyzer classRef;
+
+	static HashMap<String, Integer> allUniqueWords;
 	
 	public static void main(String[] args) {
 		
@@ -47,8 +48,8 @@ public class Mod2TextAnalyzer {
 			bufferedReader.close();
 
 			//Remove Footers and Formatting
-			int startIndex = fullFile.indexOf("<H1");
-			int endIndex = fullFile.indexOf("<BR><BR><BR><BR>");
+			int startIndex = fullFile.indexOf("<h1");
+			int endIndex = fullFile.indexOf("<div style='display:block;margin-top:4em'>*** END OF THE PROJECT GUTENBERG EBOOK THE RAVEN ***</div>");
 			String minusFooters = fullFile.substring(startIndex, endIndex);
 
 			//Remove Tags
@@ -77,7 +78,7 @@ public class Mod2TextAnalyzer {
 			
 			mdashless = mdashless.toLowerCase();
 
-			HashMap<String, Integer> allUniqueWords = new HashMap<String, Integer>();
+			allUniqueWords = new HashMap<String, Integer>();
 			char[] allChars = mdashless.toCharArray();
 			boolean wordStarted = false;
 			String word = "";
@@ -133,5 +134,10 @@ public class Mod2TextAnalyzer {
 		catch(IOException e) {
 			System.out.println("I/O error: " + e.getMessage());
 		}
+	}
+
+	public static int GetWordCount(String word)
+	{
+		return allUniqueWords.get(word);
 	}
 }
